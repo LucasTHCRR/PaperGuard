@@ -32,6 +32,7 @@ import net.paperstream.paperguard.PaperGuard;
 import net.paperstream.paperguard.PaperGuardVerifier;
 import net.paperstream.paperguard.Property;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -71,6 +72,7 @@ public final class PaperGuardPlugin extends JavaPlugin implements Listener {
     } else {
       getLogger().info("PaperGuard active for server '" + getConfig().getString("server-name")
           + "'.");
+      warnAboutConflictingSettings();
     }
     try {
       originalSocketAddress = PlayerHandshakeEvent.class
@@ -83,6 +85,24 @@ public final class PaperGuardPlugin extends JavaPlugin implements Listener {
     }
     getServer().getMessenger().registerOutgoingPluginChannel(this, CHANNEL);
     getServer().getPluginManager().registerEvents(this, this);
+  }
+
+  /**
+   * Settings that do not make PaperGuard unsafe, but make every proxied login fail in a way
+   * that looks like a PaperGuard problem. Said once at startup instead of left to be guessed.
+   */
+  private void warnAboutConflictingSettings() {
+    if (Bukkit.getOnlineMode()) {
+      getLogger().warning("online-mode is true in server.properties. Behind a proxy it must be "
+          + "false - the proxy authenticates the player, the backend cannot.");
+    }
+    final File paperGlobal = new File("config", "paper-global.yml");
+    if (paperGlobal.isFile() && YamlConfiguration.loadConfiguration(paperGlobal)
+        .getBoolean("proxies.velocity.enabled", false)) {
+      getLogger().warning("proxies.velocity.enabled is true in config/paper-global.yml. "
+          + "Velocity's own forwarding replaces the BungeeCord forwarding PaperGuard signs, "
+          + "so logins will not reach PaperGuard. Turn it off for this server.");
+    }
   }
 
   /** Takes over the config of PaperProxy-Bridge, the old name of this plugin. */
