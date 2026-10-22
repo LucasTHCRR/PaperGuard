@@ -25,11 +25,11 @@ PaperGuard signs every login instead:
 
 ## Download
 
-[Modrinth](https://modrinth.com/plugin/paperguard) (in review) · [Hangar](https://hangar.papermc.io/LucasTHCR/PaperGuard) · [GitHub releases](https://github.com/OPaperStream/PaperGuard/releases)
+[Modrinth](https://modrinth.com/plugin/paperguard) (in review) · [Hangar](https://hangar.papermc.io/LucasTHCR/PaperGuard) · [GitHub releases](https://github.com/LucasTHCRR/PaperGuard/releases)
 
 ## Setup with PaperProxy
 
-[PaperProxy](https://github.com/OPaperStream/PaperProxy) signs logins out of the box.
+[PaperProxy](https://github.com/LucasTHCRR/PaperProxy) signs logins out of the box.
 
 1. In `paperproxy.toml` on the proxy, set the server to PaperGuard:
    ```toml

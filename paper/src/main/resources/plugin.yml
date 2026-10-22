@@ -3,7 +3,7 @@ main: net.paperstream.paperguard.paper.PaperGuardPlugin
 version: '${version}'
 author: LucasTHCR
 description: Signed, replay-proof forwarding. Lets players join only through your proxy.
-website: https://github.com/OPaperStream/PaperGuard
+website: https://github.com/LucasTHCRR/PaperGuard
 api-version: '1.13'
 load: STARTUP
 folia-supported: true
